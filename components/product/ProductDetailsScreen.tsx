@@ -10,12 +10,14 @@ import {
   Heart,
   Instagram,
   Linkedin,
+  MessageCircle,
   Minus,
   Plus,
   Send,
   ShoppingBag,
   Star,
   Twitter,
+  X,
 } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
@@ -51,6 +53,7 @@ type SimilarItem = {
   price: string
   oldPrice?: string
   rating: string
+  actionActive?: boolean
 }
 
 const productImages: ProductImage[] = [
@@ -147,6 +150,7 @@ const similarItems: SimilarItem[] = [
     price: "AED 900",
     oldPrice: "AED1300",
     rating: "4.5 (2910)",
+    actionActive: true,
   },
   {
     id: "4",
@@ -167,16 +171,6 @@ const similarItems: SimilarItem[] = [
     rating: "4.5 (2910)",
   },
 ]
-
-function SectionHeader({ title }: { title: string }) {
-  return (
-    <div className="mb-6">
-      <h2 className="text-[30px] font-semibold leading-none text-[#020202] sm:text-[40px]">
-        {title}
-      </h2>
-    </div>
-  )
-}
 
 function ProductBanner() {
   return (
@@ -244,6 +238,7 @@ export function ProductDetailsScreen() {
 
   const activeImage = productImages[selectedImage]
   const subtotal = useMemo(() => quantity * 300, [quantity])
+  const similarItemColors = ["#be968e", "#303136", "#d7d7d9"]
 
   const changeImage = (step: number) => {
     setSelectedImage((prev) => {
@@ -281,20 +276,20 @@ export function ProductDetailsScreen() {
               <Button
                 size="icon-sm"
                 variant="secondary"
-                className="absolute left-3 top-1/2 z-20 h-8 w-8 -translate-y-1/2 rounded-full bg-white/80 text-[#a8a8a8] hover:bg-white sm:left-4"
+                className="absolute left-3 top-1/2 z-20 h-10 w-10 -translate-y-1/2 rounded-full bg-[#c4c4c4] text-white hover:bg-[#b7b7b7] sm:left-4 lg:left-5 lg:h-12 lg:w-12"
                 onClick={() => changeImage(-1)}
                 aria-label="Previous image"
               >
-                <ChevronLeft size={16} />
+                <ChevronLeft size={20} />
               </Button>
               <Button
                 size="icon-sm"
                 variant="secondary"
-                className="absolute right-3 top-1/2 z-20 h-8 w-8 -translate-y-1/2 rounded-full bg-[#bb8f88] text-white hover:bg-[#af8179] sm:right-4"
+                className="absolute right-3 top-1/2 z-20 h-10 w-10 -translate-y-1/2 rounded-full bg-[#be968e] text-white hover:bg-[#b48b84] sm:right-4 lg:right-5 lg:h-12 lg:w-12"
                 onClick={() => changeImage(1)}
                 aria-label="Next image"
               >
-                <ChevronRight size={16} />
+                <ChevronRight size={20} />
               </Button>
 
               <div className="relative h-[420px] sm:h-[540px] lg:h-[565px]">
@@ -341,22 +336,22 @@ export function ProductDetailsScreen() {
           </div>
 
           <div className="w-full min-w-0 lg:pt-1">
-            <div className="flex items-center justify-between">
-              <Badge className="rounded-full border border-[#f0d0ca] bg-[#fff7f6] px-3 py-1 text-[10px] font-medium text-[#c78f86] sm:text-[11px]">
+              <div className="flex items-center justify-between">
+              <Badge className="h-[37px] w-[82px] rounded-[32px] border-[0.5px] border-[#c29a93] bg-transparent px-4 py-2 text-[14px] font-semibold leading-none text-[#c29a93]">
                 T-Shirt
               </Badge>
-              <div className="flex items-center gap-2">
+              <div className="flex h-[48px] w-[104px] items-center gap-2">
                 <button
-                  className="flex h-8 w-8 items-center justify-center rounded-md border border-[#ececec] text-[#c59a93]"
+                  className="flex h-12 w-12 items-center justify-center rounded-[8px] border border-[#d9d9d9] bg-white/30 p-2 text-[#be968e]"
                   aria-label="Add to bag"
                 >
-                  <ShoppingBag size={16} />
+                  <ShoppingBag size={24} />
                 </button>
                 <button
-                  className="flex h-8 w-8 items-center justify-center rounded-md border border-[#ececec] text-[#c59a93]"
+                  className="flex h-12 w-12 items-center justify-center rounded-[8px] border border-[#d9d9d9] bg-white/30 p-2 text-[#be968e]"
                   aria-label="Add to wishlist"
                 >
-                  <Heart size={16} />
+                  <Heart size={24} />
                 </button>
               </div>
             </div>
@@ -436,13 +431,13 @@ export function ProductDetailsScreen() {
             </div>
 
             <div className="mt-5 border-t border-[#ececec] pt-5 sm:mt-6 sm:pt-6">
-              <div className="flex flex-wrap items-end gap-4 lg:gap-5">
+              <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between lg:gap-5">
                 <div className="w-full lg:w-[304px]">
-                  <p className="text-[30px] font-semibold leading-none sm:text-[34px]">
-                    Quantity <span className="text-[15px] font-normal text-[#8a8a8a] sm:text-[17px]">($300.00 for Piece)</span>
+                  <p className="text-[24px] font-semibold leading-none sm:text-[24px]">
+                    Quantity <span className="whitespace-nowrap text-[12px] font-normal text-[#8a8a8a] sm:text-[12px]">($300.00 for Piece)</span>
                   </p>
 
-                  <div className="mt-2 flex h-[56px] w-full items-center gap-5">
+                  <div className="mt-2 flex h-[56px] w-full items-center gap-5 lg:w-[302px]">
                     <div className="flex h-[56px] w-[170px] items-center rounded-[12px] bg-[#ececec] px-2">
                       <button
                         className="flex h-10 w-10 items-center justify-center rounded-[12px] bg-[#f5f5f5] text-[#adadad]"
@@ -451,7 +446,7 @@ export function ProductDetailsScreen() {
                       >
                         <Minus size={18} />
                       </button>
-                      <span className="w-[70px] text-center text-[56px] font-medium leading-none">
+                      <span className="w-[70px] text-center text-[22px] font-medium leading-none sm:text-[22px]">
                         {quantity.toString().padStart(2, "0")}
                       </span>
                       <button
@@ -463,11 +458,11 @@ export function ProductDetailsScreen() {
                       </button>
                     </div>
 
-                    <p className="text-[58px] font-semibold leading-none">${subtotal.toFixed(2)}</p>
+                    <p className="text-[34px] font-semibold leading-none sm:text-[34px]">${subtotal.toFixed(2)}</p>
                   </div>
                 </div>
 
-                <Button className="h-[56px] w-full rounded-[12px] bg-[#c29a93] px-8 py-4 text-[17px] font-medium text-white hover:bg-[#b48a83] sm:w-[234px]">
+                <Button className="h-[56px] w-full rounded-[12px] bg-[#c29a93] px-8 py-4 text-[17px] font-medium text-white hover:bg-[#b48a83] sm:w-[234px] lg:shrink-0">
                   Add To Cart
                   <ShoppingBag size={18} />
                 </Button>
@@ -543,59 +538,106 @@ export function ProductDetailsScreen() {
           </div>
 
           <div className="mt-6 flex justify-center">
-            <Button variant="secondary" className="h-10 rounded-lg bg-[#ececec] px-6 text-[#8f8f8f] hover:bg-[#dfdfdf]">
+            <Button
+              variant="secondary"
+              className="h-[53px] w-[207px] rounded-[12px] border border-[#e7e7e7] bg-[#f5f5f5] px-4 py-4 text-center text-[14px] font-semibold leading-[21px] tracking-[0] text-[#be968e] shadow-[0_1px_1px_rgba(0,0,0,0.02)] hover:bg-[#f5f5f5]"
+            >
               View More Comments
             </Button>
           </div>
         </section>
 
         <section className="mt-16">
-          <SectionHeader title="Similar Items" />
+          <div className="mb-6 flex h-[42px] w-[165px] flex-col gap-[2px]">
+            <h3 className="whitespace-nowrap text-[26px] font-semibold leading-[36px] tracking-[0] text-[#020202]">
+              Similar Items
+            </h3>
+            <span className="h-1 w-[42px] rounded-full bg-[#bf9a94]" />
+          </div>
           <div
             ref={similarRef}
-            className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            className="flex snap-x snap-mandatory items-start gap-4 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           >
             {similarItems.map((item) => (
               <article
                 key={item.id}
-                className="min-w-[240px] flex-1 snap-start rounded-2xl border border-[#ececec] bg-white p-3 sm:min-w-[280px]"
+                className="flex h-[384px] w-[288px] min-w-[288px] snap-start flex-col gap-3"
               >
-                <div className="relative h-[190px] rounded-xl bg-[#f4f4f4]">
-                  <Image
-                    src={item.src}
-                    alt={item.title}
-                    fill
-                    sizes="(min-width: 640px) 280px, 240px"
-                    className="object-contain p-3"
-                  />
-                  <Badge className="absolute left-2 top-2 bg-[#fff4f2] text-[10px] text-[#c29a93]">
+                <div className="relative h-[268px] w-[288px] overflow-hidden rounded-[20px] border border-[#0000000d] bg-[#f5f5f5]">
+                  <div className="absolute inset-0 px-[22px] pb-4 pt-[42px]">
+                    <div className="relative h-full w-full">
+                      <Image
+                        src={item.src}
+                        alt={item.title}
+                        fill
+                        sizes="288px"
+                        className="object-contain"
+                      />
+                    </div>
+                  </div>
+                  <span className="absolute left-4 top-4 flex h-[30px] w-[74px] items-center justify-center rounded-[8px] border border-[#404040]/10 bg-white/30 text-[14px] font-medium leading-none text-[#be968e]">
                     25% OFF
-                  </Badge>
+                  </span>
+                  <div className="absolute right-4 top-4 flex items-center gap-2">
+                    <button
+                      className="flex h-9 w-9 items-center justify-center rounded-[8px] border border-[#404040]/10 bg-white/30 p-[6px] text-[#be968e]"
+                      aria-label="Add product to bag"
+                    >
+                      {item.actionActive ? (
+                        <span className="relative flex h-5 w-5 items-center justify-center">
+                          <ShoppingBag size={20} className="fill-[#0a4f0c] text-[#0a4f0c]" />
+                          <X size={10} className="absolute text-white stroke-[3]" />
+                        </span>
+                      ) : (
+                        <ShoppingBag size={20} />
+                      )}
+                    </button>
+                    <button
+                      className={`flex h-9 w-9 items-center justify-center rounded-[8px] border border-[#404040]/10 bg-white/30 p-[6px] ${
+                        item.actionActive ? "text-[#0a4f0c]" : "text-[#be968e]"
+                      }`}
+                      aria-label="Add product to wishlist"
+                    >
+                      <Heart
+                        size={20}
+                        className={item.actionActive ? "fill-[#0a4f0c] text-[#0a4f0c]" : undefined}
+                      />
+                    </button>
+                  </div>
                 </div>
 
-                <p className="mt-3 text-[12px] text-[#8a8a8a]">{item.category}</p>
-                <div className="mt-1 flex items-center justify-between">
-                  <p className="line-clamp-2 text-[14px] font-medium text-[#1f1f1f]">{item.title}</p>
-                </div>
-                <div className="mt-2 flex items-center gap-1 text-[12px] text-[#8a8a8a]">
-                  <Star size={13} className="fill-[#bf9a94] text-[#bf9a94]" />
-                  {item.rating}
-                </div>
-                <div className="mt-2 flex items-center gap-2 text-[13px]">
-                  <span className="font-semibold">{item.price}</span>
-                  {item.oldPrice ? (
-                    <span className="text-[#8a8a8a] line-through">{item.oldPrice}</span>
-                  ) : null}
-                </div>
-                <div className="mt-2 flex items-center gap-1">
-                  {colorOptions.slice(0, 3).map((color) => (
-                    <span
-                      key={`${item.id}-${color.label}`}
-                      className="h-3 w-3 rounded-full"
-                      style={{ backgroundColor: color.value }}
-                    />
-                  ))}
-                  <span className="ml-1 text-[12px] text-[#777]">+2</span>
+                <div className="h-[104px] w-[288px] bg-[#f5f5f5]">
+                  <div className="flex h-full flex-col justify-between bg-[#f5f5f5]">
+                  <div className="flex items-center justify-between">
+                    <p className="text-[13px] text-[#5f5f5f]">{item.category}</p>
+                    <div className="flex items-center gap-1 text-[13px] text-[#666]">
+                      <Star size={14} className="fill-[#bf9a94] text-[#bf9a94]" />
+                      {item.rating}
+                    </div>
+                  </div>
+                  <p className="line-clamp-2 min-h-[44px] text-[16px] font-medium leading-[1.35] text-[#1f1f1f]">
+                    {item.title}
+                  </p>
+
+                  <div className="flex items-end justify-between">
+                    <div className="flex items-center gap-2 text-[14px] leading-none">
+                      <span className="font-semibold text-[#020202]">{item.price}</span>
+                      {item.oldPrice ? (
+                        <span className="text-[#8a8a8a] line-through">{item.oldPrice}</span>
+                      ) : null}
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      {similarItemColors.map((color) => (
+                        <span
+                          key={`${item.id}-${color}`}
+                          className="h-4 w-4 rounded-full"
+                          style={{ backgroundColor: color }}
+                        />
+                      ))}
+                      <span className="ml-1 text-[13px] leading-none text-[#3c3c3c]">+2</span>
+                    </div>
+                  </div>
+                  </div>
                 </div>
               </article>
             ))}
@@ -605,25 +647,25 @@ export function ProductDetailsScreen() {
             <Button
               variant="secondary"
               size="icon"
-              className="h-10 w-10 rounded-full bg-[#dfe5ea] text-[#5a5a5a] hover:bg-[#d0d8df]"
+              className="h-[50px] w-[50px] rounded-full bg-[#e8edf2] text-[#020202] hover:bg-[#dce4eb]"
               onClick={() => scrollSimilar(-1)}
               aria-label="Previous similar products"
             >
-              <ChevronLeft size={18} />
+              <ChevronLeft size={22} />
             </Button>
             <Button
               size="icon"
-              className="h-10 w-10 rounded-full bg-[#c29a93] text-white hover:bg-[#b48a83]"
+              className="h-[50px] w-[50px] rounded-full bg-[#be968e] text-white hover:bg-[#b48a83]"
               onClick={() => scrollSimilar(1)}
               aria-label="Next similar products"
             >
-              <ChevronRight size={18} />
+              <ChevronRight size={22} />
             </Button>
           </div>
         </section>
       </div>
 
-      <footer className="relative overflow-hidden">
+      <footer className="relative mt-20 overflow-hidden">
         <Image
           src="/images/kids-photography 1.png"
           alt="Kids background"
@@ -631,10 +673,10 @@ export function ProductDetailsScreen() {
           sizes="100vw"
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-[#1f1714]/80" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,2,2,0.78)_0%,rgba(2,2,2,0.58)_45%,rgba(2,2,2,0.78)_100%)]" />
 
-        <div className="relative mx-auto grid w-full max-w-[1240px] gap-8 px-4 py-10 text-white sm:grid-cols-2 lg:grid-cols-4 lg:py-12">
-          <div>
+        <div className="relative mx-auto grid w-full max-w-[1200px] gap-10 px-4 py-10 text-white md:grid-cols-2 md:px-8 lg:h-[323px] lg:grid-cols-[324px_132px_178px_369px] lg:items-start lg:justify-between lg:px-0 lg:pb-[56px] lg:pt-[65px]">
+          <div className="flex w-full max-w-[324px] flex-col gap-6">
             <Image
               src="/svg/TT LogoTT Logo 1.svg"
               alt="Tinytales Logo"
@@ -642,50 +684,54 @@ export function ProductDetailsScreen() {
               height={51}
               className="h-[46px] w-[58px] invert"
             />
-            <p className="mt-4 text-[14px] leading-6 text-white/85">
-              Ipsum in eos qui consequatur ab cum maxime. Soluta dolor quae ipsum in eos consequatur ab cum maxime.
+            <p className="h-[105px] w-full text-[14px] font-normal leading-[150%] tracking-[0] text-white/70">
+              Ipsam in eos qui consequatur ab cum maxime.Soluta dolor quae Ipsam in eos qui consequatur ab .Soluta dolor quae Ipsam in eos quconsequatur ab cum maxime.Soluta dolor quae
             </p>
           </div>
 
-          <div>
-            <h4 className="text-[28px] font-semibold">Contact Us</h4>
-            <ul className="mt-3 space-y-2 text-[15px] text-white/85">
-              <li>+971 01928491</li>
-              <li>Named@gmail.com</li>
-              <li>381, cairo, egypt</li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-[28px] font-semibold">Let Us Help</h4>
-            <ul className="mt-3 space-y-2 text-[15px] text-white/85">
+          <div className="w-full max-w-[132px]">
+            <h4 className="text-[24px] font-semibold leading-[140%]">Let Us Help</h4>
+            <ul className="mt-6 space-y-4 text-[16px] font-medium leading-none text-white/70">
               <li>My Account</li>
               <li>FAQs</li>
-              <li>Contact Us Support</li>
               <li>Categories</li>
               <li>All Products</li>
             </ul>
           </div>
 
-          <div>
-            <h4 className="text-[28px] font-semibold">Send Email</h4>
-            <div className="mt-3 flex items-center gap-2 rounded-lg border border-white/40 bg-white/12 p-2">
+          <div className="w-full max-w-[178px]">
+            <h4 className="text-[24px] font-semibold leading-[140%]">Policies</h4>
+            <ul className="mt-6 space-y-4 text-[16px] font-medium leading-none text-white/70">
+              <li>Refund Policy</li>
+              <li>About Us</li>
+              <li>Cancellation Policy</li>
+              <li>Terms and Conditions</li>
+              <li>Privacy Policy</li>
+            </ul>
+          </div>
+
+          <div className="flex w-full max-w-[369px] flex-col gap-6">
+            <h4 className="text-[24px] font-semibold leading-[140%]">Send Email</h4>
+            <div className="flex h-[62px] w-full items-center rounded-[12px] border border-[#0000001a] bg-white p-2">
               <Input
                 placeholder="Email address"
-                className="h-9 border-0 bg-white px-3 text-[#333] placeholder:text-[#9b9b9b] focus-visible:ring-0"
+                className="h-[46px] flex-1 border-0 bg-transparent px-4 text-[16px] font-normal leading-none text-[#8d8d8d] placeholder:text-[#8d8d8d] focus-visible:ring-0"
               />
-              <Button className="h-9 rounded-md bg-[#c29a93] px-4 text-[14px] text-white hover:bg-[#b48a83]">
+              <Button className="h-[46px] w-[135px] rounded-[12px] border border-[#0000001a] bg-[#be968e] px-0 text-[16px] font-semibold leading-none text-white hover:bg-[#b48a83]">
                 Send
               </Button>
             </div>
 
-            <h5 className="mt-5 text-[18px] font-semibold">Follow Us</h5>
-            <div className="mt-3 flex items-center gap-3 text-white">
-              <Facebook size={16} />
-              <Twitter size={16} />
-              <Instagram size={16} />
-              <Linkedin size={16} />
-              <Send size={16} />
+            <div className="flex flex-col gap-4">
+              <h5 className="text-[16px] font-semibold leading-[140%]">Follow Us</h5>
+              <div className="flex items-center gap-4 text-white">
+                <Facebook size={16} />
+                <Twitter size={16} />
+                <Instagram size={16} />
+                <Linkedin size={16} />
+                <MessageCircle size={16} />
+                <Send size={16} />
+              </div>
             </div>
           </div>
         </div>
