@@ -100,7 +100,8 @@ export default function VerifyPage() {
     <AuthShell
       panelTitle="One final step to activate your account."
       panelDescription="Enter your verification code and continue to your personalized Tinytales dashboard."
-      className="lg:pt-12"
+      className="lg:pt-8"
+      logoSize="large"
     >
       <div className="w-full max-w-[470px]">
         <h1 className="text-3xl font-semibold text-[#111] sm:text-[50px] sm:leading-[1.04]">

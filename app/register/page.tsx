@@ -66,7 +66,8 @@ export default function RegisterPage() {
     <AuthShell
       panelTitle="Create your account and start shopping with confidence."
       panelDescription="Register once, verify your account, and manage everything from your Tinytales dashboard."
-      className="lg:pt-2"
+      className="lg:pt-6"
+      logoSize="large"
     >
       <div className="w-full max-w-[560px]">
         <h1 className="text-3xl font-semibold text-[#111] sm:text-[46px] sm:leading-[1.06]">

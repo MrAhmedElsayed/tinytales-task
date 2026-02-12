@@ -17,6 +17,7 @@ type AuthShellProps = {
   panelTitle: string;
   panelDescription: string;
   className?: string;
+  logoSize?: "default" | "large";
 };
 
 type HighlightItem = {
@@ -48,6 +49,7 @@ export function AuthShell({
   panelTitle,
   panelDescription,
   className,
+  logoSize = "default",
 }: AuthShellProps) {
   return (
     <main className="relative flex h-[100dvh] overflow-hidden bg-background p-2 sm:p-3 lg:p-4">
@@ -55,18 +57,18 @@ export function AuthShell({
       <Card className="mx-auto h-full w-full max-w-6xl overflow-hidden border-[#e8e2db] bg-white p-0 shadow-[0_25px_65px_rgba(8,8,8,0.08)]">
         <CardContent className="grid h-full p-0 lg:grid-cols-[1.04fr_0.96fr]">
           <section className={cn("flex h-full flex-col p-4 sm:p-6 lg:p-8", className)}>
-            <Link href="/" className="mb-4 inline-flex items-center gap-3 lg:mb-6">
+            <Link href="/" className="mb-5 mt-1 inline-flex w-full justify-center sm:mb-6 lg:mb-7">
               <Image
                 src="/svg/TT LogoTT Logo 1.svg"
                 alt="Tinytales logo"
-                width={44}
-                height={34}
-                className="h-8 w-auto"
+                width={logoSize === "large" ? 112 : 92}
+                height={logoSize === "large" ? 84 : 70}
+                className={cn(
+                  "w-auto",
+                  logoSize === "large" ? "h-16 sm:h-[4.75rem]" : "h-12 sm:h-14"
+                )}
                 priority
               />
-              <span className="text-base font-semibold tracking-tight text-[#121212] sm:text-lg">
-                Tinytales
-              </span>
             </Link>
             {children}
           </section>

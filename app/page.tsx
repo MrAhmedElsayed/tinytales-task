@@ -62,6 +62,7 @@ export default function LoginPage() {
     <AuthShell
       panelTitle="Your baby-care store in one secure place."
       panelDescription="Sign in to manage orders, explore products, and continue your Tinytales shopping journey."
+      logoSize="large"
     >
       <div className="w-full max-w-[490px]">
         <h1 className="text-3xl font-semibold text-[#111] sm:text-[54px] sm:leading-[1.02]">

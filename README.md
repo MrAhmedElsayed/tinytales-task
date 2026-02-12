@@ -1,17 +1,22 @@
 # Tinytales Frontend Task
 
-Next.js app implementing:
-- Authentication flow (Register, Login, Verify) with provided API.
-- Dashboard after login with welcome text and user data.
-- Pixel-focused responsive product details page based on provided Figma/screenshots.
+## Links
+- GitHub: [https://github.com/MrAhmedElsayed/tinytales-task](https://github.com/MrAhmedElsayed/tinytales-task)
+- Live Demo: [https://tinytales-task.vercel.app/](https://tinytales-task.vercel.app/)
 
-## Stack
+## What Is Included
+- Auth flow: Login, Register, Verify account
+- Token handling with protected API requests
+- Simple dashboard with `Welcome, [User Name]`
+- Responsive Product Details UI page
+
+## Tech Stack
 - Next.js 16 (App Router)
 - TypeScript
 - Tailwind CSS v4
-- shadcn/ui (editable local components)
+- shadcn/ui
 
-## Setup
+## Run Locally
 1. Install dependencies:
 
 ```bash
@@ -24,29 +29,26 @@ npm install
 NEXT_PUBLIC_API_BASE_URL=https://tinytales.trendline.marketing/api
 ```
 
-3. Run the app:
+3. Start development server:
 
 ```bash
 npm run dev
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000)
+4. Open:
 
-## Routes
-- `/` login page
-- `/register` register page
-- `/verify` verify account page
-- `/dashboard` simple dashboard (task requirement)
-- `/product-details` responsive product details UI page
+```text
+http://localhost:3000
+```
 
-## Task Notes
-- Verification test code: `123456`
-- Token is saved in localStorage after auth.
-- Dashboard fetches `/auth/user-data`.
-- Logout calls `/auth/logout` and clears local storage.
-- Breadcrumb uses a local shadcn component in `components/ui/breadcrumb.tsx` and is editable.
+## Main Routes
+- `/` Login
+- `/register` Register
+- `/verify` Verify account (test code: `123456`)
+- `/dashboard` Dashboard
+- `/product-details` Product details UI
 
-## Checks
+## Quality Checks
 ```bash
 npm run lint
 npm run build
