@@ -6,9 +6,16 @@ import Link from 'next/link';
 import { api } from '@/lib/api';
 import { Button } from '@/components/ui/button';
 
+type DashboardUser = {
+    name?: string;
+    email?: string;
+    mobile_country_code?: string;
+    mobile?: string;
+};
+
 export default function DashboardPage() {
     const router = useRouter();
-    const [user, setUser] = useState<{ name?: string; email?: string; mobile_country_code?: string; mobile?: string } | null>(null);
+    const [user, setUser] = useState<DashboardUser | null>(null);
     const [loading, setLoading] = useState(true);
 
     const handleLogout = useCallback(async () => {
@@ -33,10 +40,12 @@ export default function DashboardPage() {
         }
 
         // Always fetch fresh data to be sure
-        api.get('/auth/user-data', token).then(response => {
+        api.get<DashboardUser>('/auth/user-data', token).then(response => {
             if (response.status) {
-                setUser(response.data);
-                api.saveUser(response.data);
+                setUser(response.data ?? null);
+                if (response.data) {
+                    api.saveUser(response.data);
+                }
             } else {
                 // If token invalid, logout
                 handleLogout();

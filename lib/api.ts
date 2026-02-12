@@ -1,7 +1,48 @@
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
+type ApiErrorValue = string | string[] | undefined;
+
+export type ApiResponse<T = unknown> = {
+    status?: boolean;
+    status_code?: number;
+    message?: string;
+    data?: T;
+    errors?: Record<string, ApiErrorValue>;
+};
+
+function getBaseUrl() {
+    if (!BASE_URL) {
+        throw new Error('NEXT_PUBLIC_API_BASE_URL is not configured.');
+    }
+    return BASE_URL;
+}
+
+export function getApiErrorMessage(response: ApiResponse | undefined, fallbackMessage: string) {
+    if (typeof response?.message === 'string' && response.message.trim().length > 0) {
+        return response.message;
+    }
+
+    if (response?.errors && typeof response.errors === 'object') {
+        for (const value of Object.values(response.errors)) {
+            if (typeof value === 'string' && value.trim().length > 0) {
+                return value;
+            }
+            if (Array.isArray(value)) {
+                const firstString = value.find(
+                    (item): item is string => typeof item === 'string' && item.trim().length > 0
+                );
+                if (firstString) {
+                    return firstString;
+                }
+            }
+        }
+    }
+
+    return fallbackMessage;
+}
+
 export const api = {
-    async post(path: string, data: Record<string, string>, token?: string) {
+    async post<TData = unknown>(path: string, data: Record<string, string>, token?: string): Promise<ApiResponse<TData>> {
         const formData = new FormData();
         Object.entries(data).forEach(([key, value]) => {
             formData.append(key, value);
@@ -15,7 +56,7 @@ export const api = {
             headers['Authorization'] = `Bearer ${token}`;
         }
 
-        const response = await fetch(`${BASE_URL}${path}`, {
+        const response = await fetch(`${getBaseUrl()}${path}`, {
             method: 'POST',
             headers,
             body: formData,
@@ -24,7 +65,7 @@ export const api = {
         return response.json();
     },
 
-    async get(path: string, token?: string) {
+    async get<TData = unknown>(path: string, token?: string): Promise<ApiResponse<TData>> {
         const headers: Record<string, string> = {
             'Accept': 'application/json',
         };
@@ -33,7 +74,7 @@ export const api = {
             headers['Authorization'] = `Bearer ${token}`;
         }
 
-        const response = await fetch(`${BASE_URL}${path}`, {
+        const response = await fetch(`${getBaseUrl()}${path}`, {
             method: 'GET',
             headers,
         });
